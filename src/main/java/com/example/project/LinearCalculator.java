@@ -13,8 +13,8 @@ public class LinearCalculator{
     //For example, "(1,2)" and "(3,4)" would be two parameter values 
     //You will have to parse the string into 4 integers, representing the 2 points.
     public LinearCalculator(String coord1, String coord2){ // <--add 2 string parameters to this constructor
-        if(coord1.substring(coord1.indexOf("(") + 1, coord1.indexOf("(") + 2).equals("-")) {
-            x1 = Integer.parseInt((coord1.substring(coord1.indexOf("(") + 2, coord1.indexOf(",")))) * -1;
+        if(coord1.substring(coord1.indexOf("(") + 1, coord1.indexOf("(") + 2).equals("-")) { //This selection checks whether the value from the coorfinates are negative
+            x1 = Integer.parseInt((coord1.substring(coord1.indexOf("(") + 2, coord1.indexOf(",")))) * -1; //It is required because parseInt of a negative seems to cause issues.
 
         }
         else{
@@ -89,14 +89,14 @@ public class LinearCalculator{
     public double distance(){
         double xDistance = x2 - x1;
         double yDistance = y2 - y1;
-        double distance = Math.sqrt(Math.pow(xDistance, 2) + Math.pow(yDistance, 2));
+        double distance = Math.sqrt(Math.pow(xDistance, 2) + Math.pow(yDistance, 2)); //getting distance from distance formula d=sqrt((x2-x1)^2 + (y2 - y1)^2)
         return roundedToHundredth(distance);
     }
     //yInt() -> returns a double.
     //calculates the y intercept of the equation and returns the value to the nearest HUNDREDTH
     //if y-int if undefined, should return -999.99
-    public double yInt(){
-        double yInt = y1 - (slope() * x1); 
+    public double yInt(){ 
+        double yInt = y1 - (slope() * x1); //Calling the slope method to get slope and calculate y-intercept. b= y - mx
         if(slope() == -999.99) {
             yInt = -999.99;
         }
@@ -106,11 +106,11 @@ public class LinearCalculator{
     //slope() -> returns a double. 
     //calculates the slope of the equations and returns the value to the nearest HUNDREDTH
     //if slope is undefined, should return -999.99
-    public double slope(){
+    public double slope(){ //Slope method calculating slope from delta y over delta x
         double xDistance = x2 - x1;
         double yDistance = y2 - y1;
 
-        if(!(xDistance == 0)){
+        if((xDistance != 0)){ //Checks whether change of x is equal to zero, to ensure equation not undefined
             double slope = (double) yDistance / (double) xDistance;
             return roundedToHundredth(slope);
 
@@ -126,16 +126,16 @@ public class LinearCalculator{
     //if the equation has no slope, the equation should return -> "undefined"
     //HINT: You may need other custom methods to decrease the amount of code in the equations() method
     public String equation(){
-        if(slope() == -999.99){
+        if(slope() == -999.99){ //Checks whether the slope is undefined
             return "undefined";
         }
-        if(!(yInt() == 0)){
+        if((yInt() != 0)){ //Checks whether the slope is zero, ignore mx when slope = 0
             if(slope() == 0){
                 String equation = "y=" + yInt();
                 return equation;
 
             }
-            if(yInt() < 0) {
+            if(yInt() < 0) { //Cehcks whther slope is negative because slope already contain a negative sign attached
                 String equation = "y=" + slope() + "x" + yInt();
                 return equation;
             }
@@ -156,7 +156,7 @@ public class LinearCalculator{
 
     //roundedToHundredth(double x)-> returns double
     //calculates the input to the nearest hundredth and returns that value
-    public double roundedToHundredth(double x){
+    public double roundedToHundredth(double x){ //Rounding learned from online source https://stackoverflow.com/questions/8825209/rounding-decimal-points
         double rounded = Math.round(x * 100) / (double) 100;
         return rounded;
     }
